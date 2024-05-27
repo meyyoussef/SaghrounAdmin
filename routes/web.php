@@ -29,7 +29,12 @@ Route::get('/profile/educatrice/{id}', function ($id) {
 // Supprimer l'educatrice d'apres son id
 Route::delete('/delete-educatrice/{id}', [AdminController::class, 'deleteEducatrice'])->name('delete.educatrice');
 //Modifier l'educatriuce d'apres son id
-Route::put('/update-educatrice/{id}', [AdminController::class, 'updateEducatrice'])->name('update.educatrice');
+Route::post('/update-educatrice/{id}', [AdminController::class, 'updateEducatrice'])->name('update.educatrice');
+Route::put('/chef/update', [AdminController::class, 'update'])->name('chef.update');
+
+Route::get('/chef/edit', [AdminController::class, 'edit'])->name('edit.chef');
+Route::get('/teacher/{id}/edit', [AdminController::class,'editTeacher'])->name('edit-teacher');
+Route::put('/teacher/{id}', [AdminController::class,'UpdateTeacher'])->name('teacher.update');
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,6 +52,9 @@ Route::get('/profile/infant/{id}', function ($id) {
 Route::post('/ajouter-chef', [AdminController::class, 'storeChef'])->name('ajouter-chef');
 Route::get('/show-chef', [AdminController::class, 'showChef'])->name('show-chef');
 Route::get('/ajouter-educatrice', [AdminController::class, 'showAddForm'])->name('ajouter-educatrice');
+Route::get('/child/{id}/edit', [AdminController::class,'editChild'])->name('edit-child');
+Route::put('/child/{id}', [AdminController::class,'UpdateChild'])->name('update-child');
+
 
 Route::get('/ajouter-chef', [AdminController::class, 'showAddFormChef'])->name('ajouter-chef');
 
@@ -59,7 +67,8 @@ Route::get('/profile/chef/{id}', function ($id) {
 })->name('profile.Chef');
 Route::get('/revenu', [statisticsController::class, 'revenu']);
 Route::get('/NbEnfants', [statisticsController::class, 'NbEnfants']);
-
+//countEvents
+Route::get('/CountEvents', [statisticsController::class, 'countEvents']);
 Route::get('/NbEnfantsParAge', [statisticsController::class, 'NbEnfantsParAge']);
 //salaire_total
 Route::get('/calculerSalairesEducatrices', [statisticsController::class, 'calculerSalairesEducatrices']);
@@ -69,7 +78,9 @@ Route::get('/calculerDepenses', [statisticsController::class, 'calculerDepenses'
 //
 Route::get('/categoriserEnfants', [statisticsController::class, 'categoriserEnfants']);
 //************************************************************************************************************ */
-
+//showEditVue
+Route::get('/Edit', [AdminController::class, 'showEditVue'])->name('Teacher.edit');
+//Route::get('/educatrice/{id}/edit', AdminController::class ,'editProfileEducatrice')->name('educatrice.edit');
 
 Route::get('/AdminDashboard', [AdminController::class, 'showIndex'])->name('Admin.index');
 Route::get('/Demand', [AdminController::class, 'showResetPasswordForm'])->name('password.demand');

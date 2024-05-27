@@ -1,178 +1,567 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html dir="ltr" lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <title> Update-teacher</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('AdminAssets/assets/images/LOGO.jpg') }}">
+    
+    <!-- Custom CSS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+    <link href="{{ asset ('AdminAssets/assets/extra-libs/c3/c3.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('AdminAssets/assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet">
+    <link href="{{ asset ('AdminAssets/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css')}}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-XXXX" crossorigin="anonymous" />
+    <!-- Custom CSS -->
+    <link href="{{ asset('AdminAssets/dist/css/style.min.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
     <style>
-        .hint-text {
-    float: left;
-    margin-top: 6px;
-    font-size: 95%;
-} 
-.toast {
-        position: fixed;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: #333;
-        color: #fff;
-        padding: 10px 20px;
-        border-radius: 5px;
-        opacity: 0;
-        transition: opacity 0.5s ease-in-out;
-    }   
+        .body {
+            font-family: Arial, sans-serif;
+         
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-left:280px; /* Décalage vers la droite */
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        select {
+            width: calc(100% - 12px);
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIzLjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIGlkPSJzdmcyIiB2aWV3Qm94PSIwIDAgMTI4IDExNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiCgkgdmlld0JveD0iMCAwIDEyOCAxMTQiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDEyOCAxMTQiIHdpZHRoPSIxMjgiIGhlaWdodD0iMTE0Ij4KPHBhdGggZD0iTTEyOCAwQzQwOS4xNCAwIDQwOS4xNCA4My4xNCAxMjggODMuMTQgNDA5LjE0IDgzLjE0IDEyOCA4My4xNCAxMjggNDA5LjE0eiIvPgo8L3N2Zz4K') no-repeat right 8px center/10px 10px;
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="date"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
     </style>
+<script>
+$(document).ready(function(){
+	$('[data-toggle="tooltip"]').tooltip();
+});
+</script>
 </head>
 <body>
-<div class="modal fade" id="editEducatorModal" tabindex="-1" role="dialog" aria-labelledby="editEducatorModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editEducatorModalLabel">Edit teacher</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Formulaire pour modifier les informations de l'éducatrice -->
-                <form id="editEducatorForm" action="{{ route('update.educatrice', ['id' => $educatrice->id]) }}" method="POST" data-update-url="{{ route('update.educatrice', ['id' => ':id']) }}">
-                     @csrf
-                     @method('PUT')
-                     <input type="hidden" name="_method" value="PUT">
-                     <div class="form-group">
-            <label for="educatriceId">ID de l'éducatrice</label>
-            <p  id="educatriceId"></p>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
         </div>
-                    <div class="form-group">
-                        <label for="firstname">Firstname</label>
-                        <input type="text" class="form-control" id="nom" name="firstname" value="">
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar" data-navbarbg="skin6">
+            <nav class="navbar top-navbar navbar-expand-md">
+                <div class="navbar-header" data-logobg="skin6">
+                    <!-- This is for the sidebar toggle which is visible on mobile only -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
+                            class="ti-menu ti-close"></i></a>
+                    <!-- ============================================================== -->
+                    <!-- Logo -->
+                    <!-- ============================================================== -->
+                    <div class="navbar-brand">
+                        <!-- Logo icon -->
+                        <a href="index.html">
+                            <b class="logo-icon">
+                                <!-- Dark Logo icon -->
+                                <img src="{{ asset ('AdminAssets/assets/images/LOGO.png') }}" alt="logo saghroun" class="dark-logo" />
+                                <!-- Light Logo icon -->
+                                <img src="{{ asset('AdminAssets/assets/images/LOGO.png') }}" alt="homepage" class="light-logo" />
+                            </b>
+                            <!--End Logo icon -->
+                            <!-- Logo text -->
+                           
+                        </a>
                     </div>
-                    <div class="form-group">
-                        <label for="lastname">Lastname</label>
-                        <input type="text" class="form-control" id="prenom" name="lastname" value="">
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone number</label>
-                        <input type="text" class="form-control" id="telephone" name="telephone" value="">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="">
-                    </div>
+                    <!-- ============================================================== -->
+                    <!-- End Logo -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Toggle which is visible on mobile only -->
+                    <!-- ============================================================== -->
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
+                        data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
+                            class="ti-more"></i></a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse collapse" id="navbarSupportedContent">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-left mr-auto ml-3 pl-1">
+                        <!-- Notification -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle pl-md-3 position-relative" href="javascript:void(0)"
+                                id="bell" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                <span><i data-feather="bell" class="svg-icon"></i></span>
+                                <span class="badge badge-primary notify-no rounded-circle">5</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-left mailbox animated bounceInDown">
+                                <ul class="list-style-none">
+                                    <li>
+                                        <div class="message-center notifications position-relative">
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)"
+                                                class="message-item d-flex align-items-center border-bottom px-3 py-2">
+                                                <div class="btn btn-danger rounded-circle btn-circle"><i
+                                                        data-feather="airplay" class="text-white"></i></div>
+                                                <div class="w-75 d-inline-block v-middle pl-2">
+                                                    <h6 class="message-title mb-0 mt-1">Luanch Admin</h6>
+                                                    <span class="font-12 text-nowrap d-block text-muted">Aid fiter </span>
+                                                    <span class="font-12 text-nowrap d-block text-muted">9:30 AM</span>
+                                                </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)"
+                                                class="message-item d-flex align-items-center border-bottom px-3 py-2">
+                                                <span class="btn btn-success text-white rounded-circle btn-circle"><i
+                                                        data-feather="calendar" class="text-white"></i></span>
+                                                <div class="w-75 d-inline-block v-middle pl-2">
+                                                    <h6 class="message-title mb-0 mt-1">Event today</h6>
+                                                    <span
+                                                        class="font-12 text-nowrap d-block text-muted text-truncate">Just
+                                                        a reminder that you have event</span>
+                                                    <span class="font-12 text-nowrap d-block text-muted">9:10 AM</span>
+                                                </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)"
+                                                class="message-item d-flex align-items-center border-bottom px-3 py-2">
+                                                <span class="btn btn-info rounded-circle btn-circle"><i
+                                                        data-feather="settings" class="text-white"></i></span>
+                                                <div class="w-75 d-inline-block v-middle pl-2">
+                                                    <h6 class="message-title mb-0 mt-1">Settings</h6>
+                                                    <span
+                                                        class="font-12 text-nowrap d-block text-muted text-truncate">You
+                                                        can customize this template
+                                                        as you want</span>
+                                                    <span class="font-12 text-nowrap d-block text-muted">9:08 AM</span>
+                                                </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)"
+                                                class="message-item d-flex align-items-center border-bottom px-3 py-2">
+                                                <span class="btn btn-primary rounded-circle btn-circle"><i
+                                                        data-feather="box" class="text-white"></i></span>
+                                                <div class="w-75 d-inline-block v-middle pl-2">
+                                                    <h6 class="message-title mb-0 mt-1">Pavan kumar</h6> <span
+                                                        class="font-12 text-nowrap d-block text-muted">Just
+                                                        see the my admin!</span>
+                                                    <span class="font-12 text-nowrap d-block text-muted">9:02 AM</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link pt-3 text-center text-dark" href="javascript:void(0);">
+                                            <strong>Check all notifications</strong>
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- End Notification -->
+                        <!-- ============================================================== -->
+                        <!-- create new -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i data-feather="settings" class="svg-icon"></i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li>
+                     
+                    </ul>
+                    <!-- ============================================================== -->
+                    <!-- Right side toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-right">
+                        <!-- ============================================================== -->
+                        <!-- Search -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item d-none d-md-block">
+                            <a class="nav-link" href="javascript:void(0)">
+                      
+
+<form id="searchForm">
+    <div class="customize-input">
+        <input id="searchInput" class="form-control custom-shadow custom-radius border-0 bg-white"
+            type="search" placeholder="Search..." aria-label="Search">
+        <i id="searchIcon" class="form-control-icon" data-feather="search"></i>
+    </div>
+</form>
+
+<div id="searchResults"></div>
+
+                            </a>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <img src="{{ asset ('AdminAssets/assets/images/users/profile-pic.jpg') }}" alt="user" class="rounded-circle"
+                                    width="40">
+                                <span class="ml-2 d-none d-lg-inline-block"><span>Hello,</span> <span
+                                        class="text-dark">Admin</span> <i data-feather="chevron-down"
+                                        class="svg-icon"></i></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+                               
+                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="mail"
+                                        class="svg-icon mr-2 ml-1"></i>
+                                    Inbox</a>
+                              
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="power"
+                                        class="svg-icon mr-2 ml-1"></i>
+                                    Logout</a>
+                           
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                    </ul>
+                </div>
+            </nav>
+        </header>
+<aside class="left-sidebar" data-sidebarbg="skin6">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar" data-sidebarbg="skin6">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('Admin.index') }}"
+                                aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span
+                                    class="hide-menu"> Saghroun</span></a></li>
+                        <li class="list-divider"></li>
+                        <li class="nav-small-cap"><span class="hide-menu">Saghroun-News</span></li>
+
+                    
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="app-chat.html"
+                                aria-expanded="false"><i data-feather="message-square" class="feather-icon"></i><span
+                                    class="hide-menu">Complaint</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('event.consult') }}" 
+                                aria-expanded="false"><i data-feather="calendar" class="feather-icon"></i><span
+                                    class="hide-menu">Events</span></a></li>
+
+                        <li class="list-divider"></li>
+                        <li class="nav-small-cap"><span class="hide-menu">Humain resource</span></li>
+                        <li class="sidebar-item">
+    <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false" onclick="toggleDropdown(event)">
+        <i data-feather="file-text" class="feather-icon"></i>
+        <span class="hide-menu">Teachers</span>
+    </a>
+    <ul id="educatricesDropdown" aria-expanded="false" class="collapse first-level">
+        <li class="sidebar-item">
+            <a href="{{ route('ajouter-educatrice') }}"class="sidebar-link">
+                <span class="hide-menu">Add teacher</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="{{ route('show-educatrices') }}" class="sidebar-link">
+                <span class="hide-menu">Consult teacher</span>
+            </a>
+        </li>
+    </ul>
+</li>
+<li class="sidebar-item">
+    <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false" onclick="toggleDropdown(event)">
+    <i class="fas fa-child"></i>
+        <span class="hide-menu">Infants</span>
+    </a>
+    <ul id="EnfantDropdown" aria-expanded="false" class="collapse first-level">
+       
+        <li class="sidebar-item">
+            <a href="{{ route('show-enfant') }}" class="sidebar-link">
+                <span class="hide-menu">Manage infants</span>
+            </a>
+        </li>
+    </ul>
+</li>
+<li class="sidebar-item">
+    <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false" onclick="toggleDropdown(event)">
+    <i class="fas fa-utensils"></i>
+
+        <span class="hide-menu">Chef</span>
+    </a>
+    <ul id="ChefDropdown" aria-expanded="false" class="collapse first-level">
+       
+        <li class="sidebar-item">
+            <a href="{{ route('show-chef') }}"  class="sidebar-link">
+                <span class="hide-menu">Consult chef</span>
+            </a>
+        </li>
+    <li class="sidebar-item">
+                                        @php
+        $gerantExists = App\Http\Controllers\AdminController::checkGerantExists();
+        @endphp
+
+        @if ($gerantExists)
+            <div class="alert alert-danger" role="alert">
+            The chef already exists in database
+            </div>
+        @else
+            <a href="{{ route('ajouter-chef') }}" class="sidebar-link">
+                <span class="hide-menu"> Add chef </span>
+            </a>
+        @endif    
+    </li>
+    </ul>
+</li>    
+     
+
+
+                        
+                    
                   
-                    <div class="form-group">
-                        <label for="salary">Salary</label>
-                        <input type="text" class="form-control" id="salaire" name="salaire" value="">
-                    </div>
-                    <div class="form-group">
-                        <label for="Level">Level</label>
-                        <input type="text" class="form-control" id="level" name="level" value="">
-                    </div>
-                    <div class="form-group">
-                        <label for="gender">Gender</label>
-                        <input type="text" class="form-control" id="gender" name="gender" value="">
-                    </div>
-                    <div class="form-group">
-                        <label for="Status">Social status</label>
-                        <input type="text" class="form-control" id="Status" name="Status" value="">
-                    </div>
-                   
-                </form>
+
+                       
+                      
+                        <li class="list-divider"></li>
+                        <li class="nav-small-cap"><span class="hide-menu">Other</span></li>
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="docs/docs.html"
+                                aria-expanded="false"><i data-feather="edit-3" class="feather-icon"></i><span
+                                    class="hide-menu">Documentation</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="{{ route('admin.logout') }}" >
+    <i data-feather="log-out" class="feather-icon"></i>
+    <span class="hide-menu">Logout</span>
+    </a>
+
+    </li>
+                        </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="saveChangesBtn">Save</button>
-            </div>
-        </div>
+            <!-- End Sidebar scroll-->
+</aside>
+        
+   
+        <div class="page-wrapper">
+        <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-7 align-self-center">
+                        <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Welcome  Admin!</h3>
+                        <div class="d-flex align-items-center">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb m-0 p-0">
+                                    <li class="breadcrumb-item"><a href="index.html">Children management</a>
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                <div class="col-5 align-self-center">
+    <div class="customize-input float-right">
+        <span id="current-date" class="custom-select custom-select-set form-control bg-white border-0 custom-shadow custom-radius"></span>
     </div>
 </div>
 <script>
-
-// Écoute les clics sur les boutons "Edit"
-document.querySelectorAll('.edit').forEach(function(button) {
-    button.addEventListener('click', function(event) {
-        event.preventDefault();
-        var educatrice = JSON.parse(button.dataset.info);
-        fillEditForm(educatrice);
-        
-        // Récupérer l'ID de l'éducatrice depuis l'attribut personnalisé data-educatrice-id
-        var educatriceId = button.dataset.educatriceId;
-        console.log("ID de l'éducatrice :", educatriceId);
-
-        // Modifier l'action du formulaire pour utiliser l'URL de mise à jour spécifique à cette éducatrice
-        var updateUrl = document.getElementById('editEducatorForm').dataset.updateUrl.replace(':id', educatriceId);
-        console.log("URL de mise à jour :", updateUrl);
-        
-        document.getElementById('educatriceId').textContent = "ID : " + educatriceId;
-        document.getElementById('editEducatorForm').action = updateUrl;
-
-        $('#editEducatorModal').modal('show'); // Affiche la boîte de dialogue modale
-    });
-});
-
-
-
-// Fonction pour remplir le formulaire de modification avec les informations de l'éducatrice
-function fillEditForm(educatrice) {
-    document.getElementById('nom').value = educatrice.firstname;
-    document.getElementById('prenom').value = educatrice.lastname;
-
-    document.getElementById('salaire').value = educatrice.salary;
-    document.getElementById('telephone').value = educatrice.phone;
-    document.getElementById('email').value = educatrice.email;
-    document.getElementById('Status').value = educatrice.Status;
-    document.getElementById('gender').value = educatrice.gender;
-    document.getElementById('level').value = educatrice.Level;
-}
-document.addEventListener('DOMContentLoaded', function() {
-    // Placez ici le code JavaScript à exécuter une fois que le DOM est chargé
-
-    // Ajoutez un écouteur d'événement au bouton "Enregistrer"
-    document.getElementById('saveChangesBtn').addEventListener('click', function() {
-        // Récupère les données modifiées depuis le formulaire
-        var editedEducator = {
-            nom: document.getElementById('nom').value,
-            prenom: document.getElementById('prenom').value,
-            telephone: document.getElementById('telephone').value,
-            email: document.getElementById('email').value,
-            gender: document.getElementById('gender').value,
-            Status: document.getElementById('Status').value,
-            level: document.getElementById('level').value,
-
-            
-            salaire: document.getElementById('salaire').value
-        };
-
-        // Récupérer l'URL de mise à jour depuis l'action du formulaire
-        var updateUrl = document.getElementById('editEducatorForm').action;
-
-        // Envoie les données modifiées au serveur via une requête AJAX
-        $.ajax({
-            url: updateUrl,
-            method: 'PUT',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: editedEducator,
-            success: function(response) {
-                // Gérer la réponse du serveur, par exemple, afficher un message de succès
-                console.log("Server response :", response);
-                showToast("The teacher\'s information has been successfully updated.");
-            },
-            error: function(xhr, status, error) {
-                // Gérer les erreurs, par exemple, afficher un message d'erreur
-                console.error("Error during update :", error);
-                showToast("An error occurred while updating teacher's information..");
-            }
-        });
-
-        // Ferme la boîte de dialogue modale
-        $('#editEducatorModal').modal('hide');
-    });
-});
-
-
+    // Fonction pour générer les options de date
+   // Fonction pour obtenir la date d'aujourd'hui et l'afficher dans le format souhaité
+   function displayCurrentDate() {
+        var currentDate = new Date();
+        var options = { month: 'long', day: 'numeric' };
+        var formattedDate = currentDate.toLocaleDateString('fr-FR', options);
+        document.getElementById('current-date').textContent = formattedDate;
+    }
+    
+    // Appel de la fonction au chargement de la page
+    window.onload = displayCurrentDate;
+    
+    // Appel de la fonction au chargement de la page
+    window.onload = generateDateOptions;
 </script>
+
+                </div>
+                </div>
+            </div>
+ 
+     
+           
+            <!-- ============================================================== -->
+        </div>
+            
+
+
+     
+           
+            <!-- ============================================================== -->
+        </div>
+        <div class="body">   
+    <div class="container">
+     
+        @if (session('success'))
+            <div>{{ session('success') }}</div>
+        @endif
+        <form id="update-form" method="POST" action="{{ route('teacher.update', ['id' => $teacher->id]) }}">
+
+            @csrf
+            @method('PUT')
+            
+            <label for="nic">NIC:</label>
+            <input type="text" name="nic" value="{{ $teacher->nic }}">
+            
+            <label for="firstname">First Name:</label>
+            <input type="text" name="firstname" value="{{ $teacher->firstname }}">
+            
+            <label for="lastname">Last Name:</label>
+            <input type="text" name="lastname" value="{{ $teacher->lastname }}">
+            
+            <label for="phone">Phone:</label>
+            <input type="text" name="phone" value="{{ $teacher->phone }}">
+            
+            <label for="address">Address:</label>
+            <input type="text" name="address" value="{{ $teacher->address }}">
+            
+            <label for="email">Email:</label>
+            <input type="email" name="email" value="{{ $teacher->email }}">
+            
+            <label for="dateofbirth">Date of Birth:</label>
+            <input type="date" name="dateofbirth" value="{{ $teacher->dateofbirth }}">
+            
+            <label for="gender">Gender:</label>
+            <select name="gender">
+                <option value="male" {{ $teacher->gender == 'male' ? 'selected' : '' }}>Male</option>
+                <option value="female" {{ $teacher->gender == 'female' ? 'selected' : '' }}>Female</option>
+            </select>
+            
+            <label for="status">Status:</label>
+            <input type="text" name="status" value="{{ $teacher->status }}">
+            <label for="status">Level:</label>
+            <input type="text" name="level" value="{{ $teacher->Level }}">
+            
+            <label for="type_degree">Type of Degree:</label>
+            <input type="text" name="type_degree" value="{{ $teacher->type_degree }}">
+            
+            <label for="languages">Languages:</label>
+            <input type="text" name="languages" value="{{ $teacher->languages }}">
+            
+            <label for="filename">CV:</label>
+            <input type="text" name="filename" value="{{ $teacher->filename }}">
+            
+            <label for="imagename">Photo:</label>
+            <input type="text" name="imagename" value="{{ $teacher->imagename }}">
+            
+            <label for="salary">Salary:</label>
+            <input type="text" name="salary" value="{{ $teacher->salary }}">
+            
+            <button type="submit">Update</button>
+        </form>
+    </div>
+    </div>
+
+
+
+<script>
+     $(document).ready(function() {
+        $('.has-arrow').click(function() {
+            $(this).toggleClass('active');
+            $(this).next('ul').toggleClass('collapse');
+        });
+    });
+</script>
+
+
+
+
+
+<script src="{{ asset('AdminAssets/assets/libs/jquery/dist/jquery.min.js') }}"></script>
+    <script src=" {{ asset('AdminAssets/assets/libs/popper.js/dist/umd/popper.min.js') }}"></script>
+    <script src="{{ asset('AdminAssets/assets/libs/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('AdminAssets/dist/js/app-style-switcher.js') }}"></script>
+    <script src="{{ asset('AdminAssets/dist/js/feather.min.js') }}"></script>
+    <script src="{{ asset('AdminAssets/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js') }}"></script>
+    <script src="{{ asset('AdminAssets/dist/js/sidebarmenu.js') }}"></script>
+    <!--Custom JavaScript -->
+    <script src="{{ asset('AdminAssets/dist/js/custom.min.js') }}"></script>
+    <!--This page JavaScript -->
+    <script src="{{ asset('AdminAssets/assets/extra-libs/c3/d3.min.js') }}"></script>
+    <script src="{{ asset('AdminAssets/assets/extra-libs/c3/c3.min.js ') }}"></script>
+    <script src="{{ asset('AdminAssets/assets/libs/chartist/dist/chartist.min.js ') }}"></script>
+    <script src="{{ asset('AdminAssets/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js ') }}"></script>
+    <script src="{{ asset('AdminAssets/assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js ') }}"></script>
+    <script src="{{ asset('AdminAssets/assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js' ) }}"></script>
+    <script src="{{ asset('AdminAssets/dist/js/pages/dashboards/dashboard1.min.js ') }}"></script>
 </body>
-</html>
+
+</html>	

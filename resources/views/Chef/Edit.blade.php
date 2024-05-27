@@ -10,8 +10,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('AdminAssets/assets/images/LOGO.pnj') }}">
-    <title>Chef's profile</title>
+    <title> Update-chef</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('AdminAssets/assets/images/LOGO.jpg') }}">
+    
     <!-- Custom CSS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 
@@ -28,68 +29,70 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<style>
 
-
-.container {
-    max-width: 800px;
-    margin: auto;
-    background: #fff;
-    padding: 40px;
-    border-radius: 8px;
-    margin-left: auto; /* Décalage vers la droite */
-    margin-right: auto; /* Décalage vers la droite */
-}
-
-.profile-section {
-    margin-bottom: 40px;
-}
-
-.profile-info {
-    margin-bottom: 20px;
-}
-
-.profile-info label {
-    font-weight: bold;
-    color: #666;
-    display: block;
-    margin-bottom: 5px;
-}
-
-.profile-info span {
-    color: #333;
-    display: block;
-}
-
-.profile-info span.email {
-    color: #007bff;
-    text-decoration: none;
-}
-
-.profile-info span.email:hover {
-    text-decoration: underline;
-}
-
-.profile-picture {
-    text-align: center;
-    float: left; /* Aligner à gauche */
-    margin-right: 20px; /* Ajouter de l'espace à droite de l'image */
-}
-
-.profile-picture img {
-    width: 50px; /* Réduire la taille de l'image */
-    height: 50px; /* Réduire la taille de l'image */
-    border-radius: 50%;
-    border: 4px solid #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.name {
-    float: left; /* Aligner à gauche */
-    margin-right: 20px; /* Ajouter de l'espace entre le nom et le prénom */
-}
-
-</style>
+    <style>
+        .body {
+            font-family: Arial, sans-serif;
+         
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-left:280px; /* Décalage vers la droite */
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        select {
+            width: calc(100% - 12px);
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIzLjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIGlkPSJzdmcyIiB2aWV3Qm94PSIwIDAgMTI4IDExNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiCgkgdmlld0JveD0iMCAwIDEyOCAxMTQiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDEyOCAxMTQiIHdpZHRoPSIxMjgiIGhlaWdodD0iMTE0Ij4KPHBhdGggZD0iTTEyOCAwQzQwOS4xNCAwIDQwOS4xNCA4My4xNCAxMjggODMuMTQgNDA5LjE0IDgzLjE0IDEyOCA4My4xNCAxMjggNDA5LjE0eiIvPgo8L3N2Zz4K') no-repeat right 8px center/10px 10px;
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="date"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
 <script>
 $(document).ready(function(){
 	$('[data-toggle="tooltip"]').tooltip();
@@ -375,7 +378,7 @@ $(document).ready(function(){
 
         @if ($gerantExists)
             <div class="alert alert-danger" role="alert">
-            The chef already exists in database
+                The chef already exists!
             </div>
         @else
             <a href="{{ route('ajouter-chef') }}" class="sidebar-link">
@@ -414,27 +417,29 @@ $(document).ready(function(){
         
    
         <div class="page-wrapper">
-            <!-- ============================================================== -->
-            <!-- Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <div class="page-breadcrumb">
+           <!-- ============================================================== -->
+           <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-7 align-self-center">
                         <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Welcome  Admin!</h3>
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb m-0 p-0">
-                                    <li class="breadcrumb-item"><a href="index.html">Saghroun management</a>
-                                    </li>
+                                <li class="breadcrumb-item">
+    <span class="align-items-center d-flex">
+        <i class="fas fa-home mr-1 align-self-center"></i> <!-- Icône de maison -->
+        <span class="align-self-center">Saghroun management</span> <!-- Nom de la section -->
+    </span>
+  <span>></span>
+    <span class="align-items-center d-flex">
+        <span class="align-self-center">Chef</span> <!-- Nom de la page -->
+    </span>
+</li>
                                 </ol>
                             </nav>
                         </div>
                     </div>
-                
-                </div>
-            </div>
-            
-<div class="col-5 align-self-center">
+                <div class="col-5 align-self-center">
     <div class="customize-input float-right">
         <span id="current-date" class="custom-select custom-select-set form-control bg-white border-0 custom-shadow custom-radius"></span>
     </div>
@@ -456,59 +461,74 @@ $(document).ready(function(){
     window.onload = generateDateOptions;
 </script>
 
+                </div>
+                </div>
+            </div>
+ 
      
            
             <!-- ============================================================== -->
         </div>
-        <div class="container">
-    <div class="row">
-        <!-- Informations personnelles -->
-        <div class="col-md-6">
-            <h6>Personal informations</h6>
-            <div class="profile-section">
-                <div class="profile-picture">
-                    <img src="{{ asset('AdminAssets\assets\images\profile-circle-svgrepo-com.svg') }}" class="rounded-circle" alt="Profile Picture">
-                </div>
-                <div class="profile-info">
-                    <label>First name and lastname:</label>
-                    <span>{{ $chef->lastname }} {{ $chef->firstname }}</span>
-                </div>
-                <div class="profile-info " style="margin-left: 65px;">
-                    <label>Date of birth</label>
-                    <span>{{ $chef->dateofbirth }}</span>
-                </div>
-                <div class="profile-info " style="margin-left: 65px;">
-                    <label>Phone number</label>
-                    <span>{{ $chef->phone }}</span>
-                </div>
-                <div class="profile-info " style="margin-left: 65px;">
-                    <label>Email:</label>
-                    <span>{{ $chef->email }}</span>
-                </div>
-            </div>
         </div>
-        <!-- Informations sur le jardin d'enfants -->
-        <div class="col-md-6">
-            <h6>Profesionnal information:</h6>
-            <div class="profile-section">
-                <div class="profile-info">
-                    <label>Specification:</label>
-                    <span>{{ $chef->type_degree }}</span>
-                </div>
-               
-                <div class="profile-info">
-                    <label>Date of hire:</label>
-                    <span>{{ $chef->created_at->format('d/m/Y') }}</span>
-                </div>
-                <div class="profile-info">
-                    <label>Salary:</label>
-                    <span>{{ $chef->salary }}</span>
-                </div>
-                <!-- Ajoutez d'autres informations relatives au jardin d'enfants au besoin -->
-            </div>
-        </div>
+        <div class="body">   
+    <div class="container">
+     
+        @if (session('success'))
+            <div>{{ session('success') }}</div>
+        @endif
+        <form id="update-form" method="POST" action="{{ route('chef.update') }}">
+            @csrf
+            @method('PUT')
+            
+            <label for="nic">NIC:</label>
+            <input type="text" name="nic" value="{{ $chef->nic }}">
+            
+            <label for="firstname">First Name:</label>
+            <input type="text" name="firstname" value="{{ $chef->firstname }}">
+            
+            <label for="lastname">Last Name:</label>
+            <input type="text" name="lastname" value="{{ $chef->lastname }}">
+            
+            <label for="phone">Phone:</label>
+            <input type="text" name="phone" value="{{ $chef->phone }}">
+            
+            <label for="address">Address:</label>
+            <input type="text" name="address" value="{{ $chef->address }}">
+            
+            <label for="email">Email:</label>
+            <input type="email" name="email" value="{{ $chef->email }}">
+            
+            <label for="dateofbirth">Date of Birth:</label>
+            <input type="date" name="dateofbirth" value="{{ $chef->dateofbirth }}">
+            
+            <label for="gender">Gender:</label>
+            <select name="gender">
+                <option value="male" {{ $chef->gender == 'male' ? 'selected' : '' }}>Male</option>
+                <option value="female" {{ $chef->gender == 'female' ? 'selected' : '' }}>Female</option>
+            </select>
+            
+            <label for="status">Status:</label>
+            <input type="text" name="status" value="{{ $chef->status }}">
+            
+            <label for="type_degree">Type of Degree:</label>
+            <input type="text" name="type_degree" value="{{ $chef->type_degree }}">
+            
+            <label for="languages">Languages:</label>
+            <input type="text" name="languages" value="{{ $chef->languages }}">
+            
+            <label for="filename">File Name:</label>
+            <input type="text" name="filename" value="{{ $chef->filename }}">
+            
+            <label for="imagename">Image Name:</label>
+            <input type="text" name="imagename" value="{{ $chef->imagename }}">
+            
+            <label for="salary">Salary:</label>
+            <input type="text" name="salary" value="{{ $chef->salary }}">
+            
+            <button type="submit">Update</button>
+        </form>
     </div>
-</div>
+    </div>
 
 
 

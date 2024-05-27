@@ -483,7 +483,7 @@ $(document).ready(function(){
 
         @if ($gerantExists)
             <div class="alert alert-danger" role="alert">
-                Un gérant de cantine existe déjà dans la base de données.
+            The chef already exists in database
             </div>
         @else
             <a href="{{ route('ajouter-chef') }}" class="sidebar-link">
@@ -532,8 +532,16 @@ $(document).ready(function(){
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb m-0 p-0">
-                                    <li class="breadcrumb-item"><a href="index.html">Saghroun management</a>
-                                    </li>
+                                <li class="breadcrumb-item">
+    <span class="align-items-center d-flex">
+        <i class="fas fa-home mr-1 align-self-center"></i> <!-- Icône de maison -->
+        <span class="align-self-center">Saghroun management</span> <!-- Nom de la section -->
+    </span>
+  <span>></span>
+    <span class="align-items-center d-flex">
+        <span class="align-self-center">Children</span> <!-- Nom de la page -->
+    </span>
+</li>
                                 </ol>
                             </nav>
                         </div>
@@ -619,10 +627,10 @@ $(document).ready(function(){
                             <a href="{{ route('profile.child', ['id' => $enfant->id]) }}" class="view" title="View" data-toggle="tooltip">
             <i class="material-icons">&#xE417;</i>
         </a>
-                              
-                                <a href="#" class="edit" title="Edit" data-toggle="tooltip" data-enfant-id="{{ $enfant->id }}" data-info="{{ json_encode($enfant) }}" data-id="{{ $enfant->id }}">
-                                    <i class="material-icons">&#xE254;</i>
-                                </a>
+        <a href="{{ route('edit-child', $enfant->id) }}" title="Edit" class="edit" data-toggle="tooltip" data-enfant-id="{{ $enfant->id }}" data-info="{{ json_encode($enfant) }}" data-id="{{ $enfant->id }}">
+    <i class="material-icons">&#xE254;</i>
+</a>
+
                                 <a href="#" class="delete" title="Delete" data-toggle="tooltip" onclick="confirmDelete('{{ $enfant->id }}', '{{ $enfant->nom }}')">
                                     <i class="material-icons">&#xE872;</i>
                                 </a>

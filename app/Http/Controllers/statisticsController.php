@@ -4,12 +4,19 @@ namespace App\Http\Controllers;
 use App\Models\Child;
 use App\Models\Teacher;
 use App\Models\Chef;
+use App\Models\Event;
 use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 
 class statisticsController extends Controller
 {
+    //Events
+    public function countEvents()
+    {
+        $count = Event::count(); // Utilise la méthode count() fournie par Eloquent pour compter le nombre d'événements
+        return response()->json(['count' => $count]);
+    }
   //Revenu
   public function revenu()
   {
@@ -57,40 +64,43 @@ class statisticsController extends Controller
         return response()->json(['depenses_totales' => $depenses_totales]);
     }
     public function categoriserEnfants()
-{
-    // Récupérer tous les enfants depuis la base de données
-    $enfants = Child::all();
-    
-    // Tableau pour stocker les enfants catégorisés
-    $enfantsCategorises = [
-        'baby\s' => [],
-        'Toddler\s' => [],
-        'Preschooler' => [],
-        'Intermediate' => []
-    ];
-    
-    // Calculer l'âge et catégoriser chaque enfant
-    foreach ($enfants as $enfant) {
-        $dateNaissance = Carbon::parse($enfant->date_de_naissance);
-        $aujourdHui = Carbon::now();
-        $age = $dateNaissance->diffInYears($aujourdHui);
+    {
+        // Récupérer tous les enfants depuis la base de données
+        $enfants = Child::all();
         
-        // Catégoriser l'enfant en fonction de son âge
-        if ($age >= 0 && $age < 1) {
-            $enfantsCategorises['baby\s'][] = $enfant;
-        } elseif ($age >= 1 && $age < 2) {
-            $enfantsCategorises['Toddler\s'][] = $enfant;
-        } elseif ($age >= 2 && $age < 3) {
-            $enfantsCategorises['Preschooler'][] = $enfant;
-        } elseif ($age >= 3 && $age < 4) {
-            $enfantsCategorises['Intermediate'][] = $enfant;
+        // Tableau pour stocker les enfants catégorisés
+        $enfantsCategorises = [
+            'baby' => [],
+            'toddler' => [],
+            'preschooler' => [],
+            'intermediate' => []
+        ];
+        
+        // Calculer l'âge et catégoriser chaque enfant
+        foreach ($enfants as $enfant) {
+            $dateNaissance = Carbon::parse($enfant->date_de_naissance);
+            $aujourdHui = Carbon::now();
+            $age = $dateNaissance->diffInYears($aujourdHui);
+            
+            // Catégoriser l'enfant en fonction de son âge
+            if ($age >= 0 && $age < 1) {
+                $enfantsCategorises['baby'][] = $enfant;
+            } elseif ($age >= 1 && $age < 2) {
+                $enfantsCategorises['toddler'][] = $enfant;
+            } elseif ($age >= 2 && $age < 3) {
+                $enfantsCategorises['preschooler'][] = $enfant;
+            } elseif ($age >= 3 && $age < 4) {
+                $enfantsCategorises['intermediate'][] = $enfant;
+            }
+            
+            // Ajouter l'âge à l'enfant pour référence future
+            $enfant->age = $age;
         }
-        
-        // Ajouter l'âge à l'enfant pour référence future
-        $enfant->age = $age;
+        return view('Admin.index')->with('enfantsCategorises', $enfantsCategorises);
+
     }
-    return response()->json(['enfantsCategorises' => $enfantsCategorises]);
-}
+    
+    
 
 
 }

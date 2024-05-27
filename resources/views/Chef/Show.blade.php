@@ -532,8 +532,16 @@ $(document).ready(function(){
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb m-0 p-0">
-                                    <li class="breadcrumb-item"><a href="index.html">Saghroun management</a>
-                                    </li>
+                                <li class="breadcrumb-item">
+    <span class="align-items-center d-flex">
+        <i class="fas fa-home mr-1 align-self-center"></i> <!-- Icône de maison -->
+        <span class="align-self-center">Saghroun management</span> <!-- Nom de la section -->
+    </span>
+  <span>></span>
+    <span class="align-items-center d-flex">
+        <span class="align-self-center">Chef</span> <!-- Nom de la page -->
+    </span>
+</li>
                                 </ol>
                             </nav>
                         </div>
@@ -615,10 +623,11 @@ $(document).ready(function(){
                                <a href="{{ route('profile.Chef', ['id' => $chef->id]) }}" class="view" title="View" data-toggle="tooltip">
             <i class="material-icons">&#xE417;</i>
         </a>
-          <!-- Bouton de modifier profile -->
-          <a href="#" class="edit" title="Edit" data-toggle="tooltip">
-        <i class="material-icons">&#xE254;</i>
-    </a>
+        <a href="{{ route('edit.chef') }}" title="Edit" data-toggle="tooltip">
+    <i class="material-icons">&#xE254;</i>
+</a>
+
+
 
                             <!-- Bouton de suppression avec confirmation -->
                            <!-- Bouton de suppression avec confirmation -->

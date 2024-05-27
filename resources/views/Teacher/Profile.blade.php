@@ -376,7 +376,7 @@ $(document).ready(function(){
 
         @if ($gerantExists)
             <div class="alert alert-danger" role="alert">
-                Un gérant de cantine existe déjà dans la base de données.
+            The chef already exists in database
             </div>
         @else
             <a href="{{ route('ajouter-chef') }}" class="sidebar-link">

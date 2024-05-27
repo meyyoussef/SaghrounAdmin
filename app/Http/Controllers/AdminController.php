@@ -79,6 +79,7 @@ class AdminController extends Controller
         $educatrice->type_degree = "";
         $educatrice->salary = 900; // Valeur par défaut pour le salaire
         $educatrice->gender = "";
+        $educatrice->Level = "baby";
         $educatrice->status = "";
         $educatrice->languages = "";
         $educatrice->filename = "";
@@ -97,7 +98,8 @@ class AdminController extends Controller
     // Envoyer un e-mail à l'éducatrice avec ses données de connexion
          Mail::to($educatrice->email)->send(new TeacherAddedNotification($educatrice, $password));
         // Rediriger l'utilisateur vers une page de succès ou une autre page
-        return redirect()->back()->with('success', 'Teacher added successfully!');
+        return redirect()->route('show-educatrices')->with('success', 'Teacher added successfully!');
+
     }
     // ********************Show Teachers********************************//
     public function showTeachers()
@@ -122,6 +124,8 @@ class AdminController extends Controller
         // Retourner les données de l'éducatrice
         return response()->json(['educatrice' => $educatrice]);
     }
+
+
       //***********************    delete teacher ********************************************* *//
     public function deleteEducatrice($id)
     {
@@ -137,7 +141,7 @@ class AdminController extends Controller
         $educatrice->delete();
     
         // Retourner une réponse réussie
-        return response()->json(['message' => 'Teacher deleted successfully.']);
+        return redirect()->route('show-educatrices')->with('success', 'Teacher deleted successfully!');
     }
     //**************************************** edit teacher ************************************************************/
     public function updateEducatrice(Request $request, $id)
@@ -155,23 +159,95 @@ class AdminController extends Controller
                 'salary' => 'required',
                 'Level' => 'required',
                 'gender' => 'required',
-                'status' => 'required',
+                'Status' => 'required',
             ]);
     
             // Mettre à jour les données de l'éducatrice avec les données du formulaire
-            Log::debug('Data received from AJAX request:', $request->all());
-
             $educatrice->update($validatedData);
     
-            // Rediriger l'utilisateur vers la page où il peut voir les détails de l'éducatrice
-            return redirect()->route('profile.educatrice', ['id' => $educatrice->id])->with('success', 'The teacher\'s information has been successfully updated');
+            // Retourner les données mises à jour de l'éducatrice au format JSON
+            return response()->json(['id' => $educatrice->id]);
         } catch (\Exception $e) {
             // En cas d'erreur, enregistrer les détails de l'erreur dans les journaux
             Log::error('An error occurred while updating the teacher: ' . $e->getMessage());
-            // Rediriger l'utilisateur vers une page d'erreur avec un message approprié
-            return redirect()->back()->with('error', 'An error occurred while updating the teacher. Please try again later');
+            // Retourner une réponse d'erreur au format JSON
+            return response()->json(['error' => 'An error occurred while updating the teacher. Please try again later'], 500);
         }
     }
+    public function edit()
+{
+    $chef = Chef::first(); // Récupère le premier chef de la base de données
+    return view('chef.Edit')->with('chef', $chef);
+}
+
+    public function update(Request $request)
+    {
+        // Récupérer le chef (puisqu'il n'y a qu'un seul chef)
+        $chef = Chef::firstOrFail();
+    
+        // Assurez-vous que seuls les attributs fillables sont mis à jour
+        $chef->fill($request->only([
+            'nic', 'firstname', 'lastname', 'phone', 'address', 'email', 'dateofbirth', 'password', 'confirmpassword', 'gender', 'status', 'type_degree', 'languages', 'filename', 'imagename', 'salary'
+        ]));
+    
+        // Sauvegarder les modifications
+        $chef->save();
+    
+        return redirect()->route('show-chef')->with('success', 'Utilisateur mis à jour avec succès.');
+    }
+    public function editTeacher($id)
+    {
+        // Récupère l'enseignant en fonction de son ID
+        $teacher = Teacher::findOrFail($id);
+        
+        return view('teacher.Edit')->with('teacher', $teacher);
+    }
+    
+    public function updateTeacher(Request $request, $id)
+    {
+        // Récupérer l'enseignant avec l'ID spécifié
+        $teacher = Teacher::findOrFail($id);
+        
+        // Assurez-vous que seuls les attributs fillables sont mis à jour
+        $data = $request->only([
+            'nic', 'firstname', 'lastname', 'phone', 'address', 'email', 'dateofbirth', 'password', 'confirmpassword', 'gender', 'status', 'type_degree', 'languages', 'Level','filename', 'imagename', 'salary'
+        ]);
+        
+        // Mettre à jour les données de l'enseignant avec les données provenant de la requête
+        $teacher->update($data);
+        
+        return redirect()->route('show-educatrices')->with('success', 'Enseignant mis à jour avec succès.');
+    }
+    
+    
+    public function editChild($id)
+    {
+        // Récupère l'enfant en fonction de son ID
+        $child = Child::findOrFail($id);
+        
+        return view('child.Edit')->with('child', $child);
+    }
+    
+    public function UpdateChild(Request $request, $id)
+    {
+        // Récupérer l'enfant avec l'ID spécifié
+        $child = Child::findOrFail($id);
+        
+        // Assurez-vous que seuls les attributs fillables sont mis à jour
+        $data = $request->only([
+            'firstname', 'lastname', 'activities', 'dateofbirth', 'filename', 'gender', 'allergies', 'conditions', 'message', 'username',
+            'phone', 'email', 'password', 'frais',
+        ]);
+    
+        // Mettre à jour les données de l'enfant avec les données provenant de la requête
+        $child->update($data);
+    
+        return redirect()->route('show-enfant')->with('success', 'Enfant mis à jour avec succès.');
+    }
+    
+    
+    
+    
     public function updateShowEducatrices(Request $request, $id)
     {
         try {
@@ -313,6 +389,10 @@ public function showAddForm()
 public function showResetPasswordForm()
 {
     return view('Admin.ResetPassword');
+}
+public function showEditVue()
+{
+    return view('Teacher.Edit');
 }
 public function showIndex()
 {

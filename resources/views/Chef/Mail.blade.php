@@ -46,7 +46,7 @@
 </head>
 <body>
     <div class="container">
-    <img src="{{ asset('AdminAssets/assets/images/LOGO.jpg') }}" alt="Logo Saghroun">
+
         <h1>Bonjour {{ $chef->lastname }} {{ $chef->firstname }},</h1>
         <p>Votre compte chef de cantine a été créé avec succès.</p>
         <p>Voici vos informations de connexion :</p>

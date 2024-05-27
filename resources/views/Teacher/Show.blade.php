@@ -11,7 +11,7 @@
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('AdminAssets/assets/images/LOGO.pnj') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('AdminAssets/assets/images/LOGO.pjg') }}">
     <title>Teacher management</title>
     <!-- Custom CSS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
@@ -532,8 +532,20 @@ $(document).ready(function(){
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb m-0 p-0">
-                                    <li class="breadcrumb-item"><a href="index.html">Saghroun management</a>
-                                    </li>
+                                <li class="breadcrumb-item">
+    <span class="align-items-center d-flex">
+        <i class="fas fa-home mr-1 align-self-center"></i> <!-- Icône de maison -->
+        <span class="align-self-center">Saghroun management</span> <!-- Nom de la section -->
+    </span>
+  <span>></span>
+    <span class="align-items-center d-flex">
+        <span class="align-self-center">Teachers</span> <!-- Nom de la page -->
+    </span>
+</li>
+
+
+
+
                                 </ol>
                             </nav>
                         </div>
@@ -617,9 +629,9 @@ $(document).ready(function(){
             <i class="material-icons">&#xE417;</i>
         </a>
           <!-- Bouton de modifier profile -->
-          <a href="#" class="edit" title="Edit" data-toggle="tooltip" data-educatrice-id="{{ $educatrice->id }}" data-info="{{ json_encode($educatrice) }}" data-id="{{ $educatrice->id }}">
-        <i class="material-icons">&#xE254;</i>
-    </a>
+          <a href="{{ route('edit-teacher', $educatrice->id) }}" title="Edit" class="edit" data-toggle="tooltip" data-enfant-id="{{ $educatrice->id }}" data-info="{{ json_encode($educatrice) }}" data-id="{{ $educatrice->id }}">
+    <i class="material-icons">&#xE254;</i>
+</a>
     
 
                             <!-- Bouton de suppression avec confirmation -->
@@ -649,70 +661,7 @@ $(document).ready(function(){
             </div>  
         </div>
     </div>
-    
-<div class="modal fade" id="editEducatorModal" tabindex="-1" role="dialog" aria-labelledby="editEducatorModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editEducatorModalLabel">Edit teacher</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Formulaire pour modifier les informations de l'éducatrice -->
-                <form id="editEducatorForm" action="{{ route('update.educatrice', ['id' => $educatrice->id]) }}" method="POST" data-update-url="{{ route('update.educatrice', ['id' => ':id']) }}">
-                     @csrf
-                     @method('PUT')
-                     <input type="hidden" name="_method" value="PUT">
-                     <div class="form-group">
-            <label for="educatriceId">ID de l'éducatrice</label>
-            <p  id="educatriceId"></p>
-        </div>
-                    <div class="form-group">
-                        <label for="firstname">Firstname</label>
-                        <input type="text" class="form-control" id="nom" name="firstname" value="">
-                    </div>
-                    <div class="form-group">
-                        <label for="lastname">Lastname</label>
-                        <input type="text" class="form-control" id="prenom" name="lastname" value="">
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone number</label>
-                        <input type="text" class="form-control" id="telephone" name="telephone" value="">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="">
-                    </div>
-                  
-                    <div class="form-group">
-                        <label for="salary">Salary</label>
-                        <input type="text" class="form-control" id="salaire" name="salaire" value="">
-                    </div>
-                    <div class="form-group">
-                        <label for="Level">Level</label>
-                        <input type="text" class="form-control" id="level" name="level" value="">
-                    </div>
-                    <div class="form-group">
-                        <label for="gender">Gender</label>
-                        <input type="text" class="form-control" id="gender" name="gender" value="">
-                    </div>
-                    <div class="form-group">
-                        <label for="Status">Social status</label>
-                        <input type="text" class="form-control" id="Status" name="Status" value="">
-                    </div>
-                   
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="saveChangesBtn">Save</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+ 
 <script>
  document.addEventListener('DOMContentLoaded', function() {
     var searchForm = document.getElementById('searchForm');
@@ -772,27 +721,28 @@ $(document).ready(function(){
 
     // Fonction pour afficher le toast
     function showToast(message) {
-        // Créer un élément pour le toast
-        var toast = document.createElement('div');
-        toast.className = 'toast';
-        toast.textContent = message;
+    // Créer un élément pour le toast
+    var toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
 
-        // Ajouter le toast à la page
-        document.body.appendChild(toast);
+    // Ajouter le toast à la page
+    document.body.appendChild(toast);
 
-        // Afficher le toast pendant 3 secondes
+    // Afficher le toast pendant 3 secondes
+    setTimeout(function () {
+        toast.style.opacity = '1';
+    }, 100);
+
+    // Masquer et supprimer le toast après 6 secondes
+    setTimeout(function () {
+        toast.style.opacity = '0';
         setTimeout(function () {
-            toast.style.opacity = '1';
-        }, 100);
+            document.body.removeChild(toast);
+        }, 1000);
+    }, 6000); // Modification du délai à 6000 (6 secondes)
+}
 
-        // Masquer et supprimer le toast après 3 secondes
-        setTimeout(function () {
-            toast.style.opacity = '0';
-            setTimeout(function () {
-                document.body.removeChild(toast);
-            }, 1000);
-        }, 3000);
-    }
 </script>
 
 <!-- Votre code HTML existant -->
@@ -804,74 +754,6 @@ $(document).ready(function(){
             $(this).next('ul').toggleClass('collapse');
         });
     });
-</script>
-
-
-<script>
-// Écoute les clics sur les boutons "Edit"
-document.querySelectorAll('.edit').forEach(function(button) {
-    button.addEventListener('click', function(event) {
-        event.preventDefault();
-        var educatrice = JSON.parse(button.dataset.info);
-        fillEditForm(educatrice);
-        
-        // Récupérer l'ID de l'éducatrice depuis l'attribut personnalisé data-educatrice-id
-        var educatriceId = button.dataset.educatriceId;
-        console.log("ID de l'éducatrice :", educatriceId);
-
-        // Modifier l'action du formulaire pour utiliser l'URL de mise à jour spécifique à cette éducatrice
-        var updateUrl = document.getElementById('editEducatorForm').dataset.updateUrl.replace(':id', educatriceId);
-        console.log("URL de mise à jour :", updateUrl);
-        
-        document.getElementById('educatriceId').textContent = "ID : " + educatriceId;
-        document.getElementById('editEducatorForm').action = updateUrl;
-
-        $('#editEducatorModal').modal('show'); // Affiche la boîte de dialogue modale
-    });
-});
-
-
-
-// Fonction pour remplir le formulaire de modification avec les informations de l'éducatrice
-function fillEditForm(educatrice) {
-    document.getElementById('nom').value = educatrice.firstname;
-    document.getElementById('prenom').value = educatrice.lastname;
-
-    document.getElementById('salaire').value = educatrice.salary;
-    document.getElementById('telephone').value = educatrice.phone;
-    document.getElementById('email').value = educatrice.email;
-    document.getElementById('Status').value = educatrice.Status;
-    document.getElementById('gender').value = educatrice.gender;
-    document.getElementById('level').value = educatrice.Level;
-}
-document.addEventListener('DOMContentLoaded', function() {
-    // Ajoutez un écouteur d'événement au bouton "Save"
-    document.getElementById('saveChangesBtn').addEventListener('click', function() {
-        // Récupérez le formulaire d'édition
-        var form = document.getElementById('editEducatorForm');
-
-        // Soumettez le formulaire
-        form.submit();
-    });
-});
-
-
-// Fonction pour afficher les données remplies du formulaire
-function displayFormData(form) {
-    console.log('Edited Educator Information:');
-    console.log('First Name:', data.firstname);
-    console.log('Last Name:', data.lastname);
-    console.log('Phone:', data.phone);
-    console.log('Email:', data.email);
-    console.log('Gender:', data.gender);
-    console.log('Status:', data.status);
-    console.log('Level:', data.Level);
-    console.log('Salary:', data.salaire);
-}
-
-
-
-
 </script>
 
 
